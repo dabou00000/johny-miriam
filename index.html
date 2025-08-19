@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Getting to Know You – Minimal Mobile</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#111827" />
+  <style>
+    /* --------- Base (Mobile-first) --------- */
+    :root{
+      --bg:#ff008c;         /* slate-900 */
+      --card:#ffa9f1;       /* gray-900 */
+      --text:#e5e7eb;       /* gray-200 */
+      --muted:#9ca3af;      /* gray-400 */
+      --accent1:#60a5fa;    /* blue-400 */
+      --accent2:#a78bfa;    /* violet-400 */
+      --accent3:#34d399;    /* emerald-400 */
+      --ring:rgba(96,165,250,.5);
+      --shadow:0 12px 30px rgba(0,0,0,.35);
+      --radius:18px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial;
+      background:
+        radial-gradient(1200px 600px at 10% -10%, rgba(96,165,250,.08), transparent 60%),
+        radial-gradient(1200px 600px at 110% 20%, rgba(167,139,250,.08), transparent 60%),
+        var(--bg);
+      color:var(--text);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:16px;
+    }
+
+    /* --------- Wrapper --------- */
+    .app{
+      width:100%;
+      max-width:520px;
+      display:flex;
+      flex-direction:column;
+      gap:14px;
+    }
+
+    /* --------- Badge for MIRIAM --------- */
+    .hero-badge{
+      position:relative;
+      font-weight:700;
+      letter-spacing:.4px;
+      text-transform:uppercase;
+      text-align:center;
+      padding:12px 16px;
+      border-radius:999px;
+      background:linear-gradient(90deg, rgba(96,165,250,.18), rgba(167,139,250,.18));
+      color:#fff;
+      border:1px solid rgba(255,255,255,.12);
+      backdrop-filter: blur(6px);
+      box-shadow: 0 6px 18px rgba(96,165,250,.15), inset 0 0 0 1px rgba(255,255,255,.06);
+      overflow:hidden;
+      isolation:isolate;
+    }
+    .hero-badge::before{
+      content:"";
+      position:absolute; inset:-2px;
+      background:conic-gradient(from 0deg, transparent 0 70%, rgba(52,211,153,.15) 75%, transparent 85%);
+      filter:blur(12px);
+      animation:spin 8s linear infinite;
+      z-index:-1;
+    }
+    .hero-badge .sparkle{
+      font-size:12px;
+      opacity:.8;
+      margin:0 6px;
+    }
+    @keyframes spin{to{transform:rotate(360deg)}}
+
+    /* --------- Card --------- */
+    .card{
+      background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01));
+      border:1px solid rgba(255,255,255,.08);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      padding:18px;
+    }
+    .title{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:8px;
+      margin-bottom:10px;
+    }
+    .title h1{
+      margin:0;
+      font-size:18px;
+      font-weight:800;
+      letter-spacing:.3px;
+    }
+    .pill{
+      font-size:11px;
+      color:var(--muted);
+      border:1px solid rgba(255,255,255,.12);
+      padding:6px 10px;
+      border-radius:999px;
+    }
+
+    .question{
+      background:#0b1220;
+      border:1px solid rgba(255,255,255,.07);
+      border-radius:14px;
+      padding:18px;
+      font-size:18px;
+      line-height:1.6;
+      min-height:120px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+    }
+
+    .controls{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:10px;
+      margin-top:14px;
+    }
+    button{
+      appearance:none;
+      border:none;
+      border-radius:12px;
+      padding:14px 12px;
+      font-weight:700;
+      letter-spacing:.2px;
+      font-size:16px;
+      color:#0b1220;
+      background:linear-gradient(180deg, #93c5fd, #60a5fa);
+      box-shadow:0 8px 18px rgba(96,165,250,.35);
+      cursor:pointer;
+      transition:transform .04s ease, filter .2s ease;
+      touch-action:manipulation;
+    }
+    button:active{ transform:scale(.98) }
+    .secondary{
+      background:linear-gradient(180deg, #c4b5fd, #a78bfa);
+      box-shadow:0 8px 18px rgba(167,139,250,.35);
+    }
+    .tertiary{
+      background:linear-gradient(180deg, #6ee7b7, #34d399);
+      box-shadow:0 8px 18px rgba(52,211,153,.35);
+      grid-column: span 2;
+    }
+
+    .hint{
+      margin-top:10px;
+      font-size:12px;
+      color:var(--muted);
+      text-align:center;
+    }
+
+    /* Accessibility + reduced motion */
+    @media (prefers-reduced-motion: reduce){
+      .hero-badge::before{ animation:none }
+      button{ transition:none }
+    }
+
+    /* Slight upscale for larger screens */
+    @media (min-width:640px){
+      .question{ min-height:140px; font-size:19px }
+      .title h1{ font-size:20px }
+    }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <!-- Nice place for the line you asked -->
+    <div class="hero-badge" aria-label="Special banner">
+      <span class="sparkle">✦</span> MIRIAM LBATALLE LCUTE. <span class="sparkle">✦</span>
+    </div>
+
+    <section class="card" role="region" aria-labelledby="title">
+      <div class="title">
+        <h1 id="title">Getting to Know You</h1>
+        <div class="pill">Arabic questions • Answer in English</div>
+      </div>
+
+      <div id="question" class="question">Tap “Get a Question” to start.</div>
+
+      <div class="controls">
+        <button id="nextBtn" type="button">Get a Question</button>
+        <button id="shuffleBtn" class="secondary" type="button">Shuffle Pack</button>
+        <button id="copyBtn" class="tertiary" type="button">Copy Current Question</button>
+      </div>
+
+      <div class="hint">
+        Take turns: one taps “Get a Question”, both answer in English, discuss freely.
+      </div>
+    </section>
+  </main>
+
+  <script>
+    /* ========== Questions (Expandable – mobile friendly) ========== */
+    const questions = [
+      // ===== الحياة اليومية =====
+      "شو أكتر عادة يومية ما فيك تستغني عنها؟",
+      "شو أول شي بتعمله أول ما تصحى؟",
+      "شو آخر شي بتفكر فيه قبل ما تنام؟",
+      "بتحب الصبح أكتر ولا الليل؟ وليش؟",
+      "كيف بتقضي وقت فراغك عادة؟",
+      "شو أكتر تطبيق بتستعمله يوميًا؟ وليش؟",
+      "بتفضل العمل من البيت ولا من المكتب؟",
+      "شو العادة اللي نفسك تتخلص منها؟",
+      "شو مهارة صغيرة حسّنت حياتك اليومية؟",
+      "شو أفضل طريقة بترتاح فيها بعد يوم طويل؟",
+
+      // ===== الطفولة والدراسة =====
+      "شو أول ذكرى واضحة بتتذكرها من طفولتك؟",
+      "شو كانت لعبتك المفضلة وإنت صغير؟",
+      "مين كان أقرب صديق إلك بالمدرسة؟",
+      "شو المادة اللي كنت تحبها أكتر شي وليش؟",
+      "شو كان حلم الطفولة تبعك؟",
+      "كان في لقب مشهور فيك وإنت صغير؟ شو هو؟",
+      "شو موقف مضحك صار معك بالمدرسة؟",
+      "مين معلم/ة ترك تأثير فيك؟ وليش؟",
+      "كنت شاطر بالأنشطة، رياضة أو فنون؟ احكي شوي.",
+      "شو أول مرة حسّيت حالك مسؤول فيها؟",
+
+      // ===== الهوايات والاهتمامات =====
+      "شو هواياتك الحالية؟ وكيف بلشت فيها؟",
+      "إذا بدك تتعلم هواية جديدة، شو بتختار؟",
+      "شو نوع الرياضة اللي بتحبها أكتر؟",
+      "بتحب القراءة؟ شو آخر كتاب قرأته وعجبك؟",
+      "شو آخر فيلم أو مسلسل نَصحت فيه حدا؟ وليش؟",
+      "شو نوع الموسيقى اللي بيريّحك؟",
+      "بتحب ألعاب الفيديو؟ شو لعبتك المفضلة؟",
+      "بتحب تكتب أو ترسم؟ شاركني تجربة.",
+      "شو مشروع شخصي صغير اشتغلت عليه وحبيته؟",
+      "إذا عندك بودكاست، عن شو بتحكي فيه؟",
+
+      // ===== الأكل والشرب =====
+      "شو أكتر أكلة بتحبها وليش؟",
+      "في أكلة مستحيل تجربها؟ شو هي؟",
+      "قهوة ولا شاي؟ وكيف بتشربها؟",
+      "بتحب الأكل الحار ولا العادي؟",
+      "شو وجبتك المفضلة لما تكون مشغول؟",
+      "بتحب تطبخ؟ شو أول طبخة نجحت معك؟",
+      "شو مطبخ عالمي بتحبه أكتر؟",
+      "حلو ولا مالح؟ شو مثال بتحبه؟",
+      "شو أكلة من الطفولة لساتك بتحبها؟",
+      "شو سناكك المفضل وقت الفيلم؟",
+
+      // ===== السفر والأماكن =====
+      "شو أجمل مكان زرته وليش حبيته؟",
+      "إذا فيك تسافر بكرا، وين بتروح؟",
+      "بتفضل البحر ولا الجبل؟",
+      "مدينة مزدحمة ولا مكان هادئ؟",
+      "شو بلد بتحلم تزوره من زمان؟",
+      "شو أطرف موقف صار معك برحلة؟",
+      "بتحب تخطط للسفر بالتفصيل ولا عالسبونتانية؟",
+      "شو أكلة غريبة جربتها بسفرة؟",
+      "أفضل رفيق سفر بالنسبة إلك وكيف بتختاره؟",
+      "مكان قريب تتمنى ترجعله؟",
+
+      // ===== المستقبل والأهداف =====
+      "وين بتشوف حالك بعد 5 سنين؟",
+      "شو هدف كبير عم تشتغل عليه هلأ؟",
+      "إذا بتتعلم لغة جديدة فورًا، شو بتختار؟ وليش؟",
+      "وظيفة أحلامك بلا شروط؟ شو هي؟",
+      "شو مهارة حابب تحسّنها خلال السنة الجاية؟",
+      "إذا ربحت مليون دولار، شو أول خطوة؟",
+      "بتفضل وقت فراغ كتير ولا راتب أكبر؟ وليش؟",
+      "شو مشروع جانبي بتتمنى تبدأه؟",
+      "شي بتحب تورثه للمستقبل من قيمك؟",
+      "لو في منتور ترافقه شهر، مين بتختار؟",
+
+      // ===== المواقف والتجارب =====
+      "احكي عن موقف مضحك صار معك وبتتذكره دايمًا.",
+      "شو أصعب قرار أخدته بحياتك؟",
+      "موقف محرج صار معك وكيف تعاملت معه؟",
+      "شو إنجاز بتفتخر فيه كتير؟",
+      "تجربة فشلت فيها وتعلمت منها درس مهم؟",
+      "مرة تصرفت فيها بشجاعة؟ احكي.",
+      "موقف خليك تغيّر رأيك بشي مهم.",
+      "شو أكثر يوم مشغول مرّ عليك؟",
+      "شي جرّبته لأول مرة وطلع ممتع؟",
+      "متى حسيت إنك خرجت من منطقة الراحة؟",
+
+      // ===== نقاشات عميقة (بدون رومانسية) =====
+      "شو تعريفك الشخصي للسعادة؟",
+      "شو أكتر قيمة إنسانية بترتّبها أولاً؟ وليش؟",
+      "هل الحظ إلو دور أساسي ولا التحضير أهم؟",
+      "شو معنى النجاح بالنسبة إلك؟",
+      "شو أهم مبدأ ما بتساوم عليه؟",
+      "كيف بتتخذ قرارات صعبة؟ عندك إطار معيّن؟",
+      "شو الشي اللي بتخاف تخسره فعلًا؟",
+      "هل تغيّر رأيك بفكرة كبيرة مؤخرًا؟ وكيف؟",
+      "شو حدود المزاح المقبول برأيك؟",
+      "شو الفرق بين الراحة والكسل بالنسبة إلك؟",
+
+      // ===== متنوعة لفتح نقاش =====
+      "شو سؤال بتحس لازم يُسأل أكتر بالحياة؟",
+      "لو فيك تحضر ورشة بيوم واحد، عن شو بتكون؟",
+      "شو عادة غريبة بتلاقيها لطيفة عند الناس؟",
+      "تطبيق تتمنى لو ما اخترعوه؟",
+      "لو فيك تغير شي بسيط بمجتمعك، شو هو؟",
+      "شي صغير بتعمله ليوم أحسن؟",
+      "لو كان عندك شعار شخصي، شو بيقول؟",
+      "قناة يوتيوب أو بودكاست بترشحه بقوة؟ ليش؟",
+      "قرار صغير غيّر عندك كتير؟",
+      "لو فيك تعطي نصيحة عامة لأي شخص بالعشرينات، شو بتكون؟",
+    ];
+
+    // يمكنك توسيع القائمة بسهولة حتى 1000+ بس تضيف أسطر جديدة بنفس الصيغة.
+    // اللعبة مصممة لتتعامل مع قوائم طويلة.
+
+    /* ========== Logic ========== */
+    let order = [...Array(questions.length).keys()];
+    function shuffle(arr){
+      for(let i=arr.length-1;i>0;i--){
+        const j = Math.floor(Math.random()*(i+1));
+        [arr[i],arr[j]] = [arr[j],arr[i]];
+      }
+      return arr;
+    }
+    function setQuestion(index){
+      const el = document.getElementById('question');
+      el.textContent = questions[index];
+    }
+    function nextQuestion(){
+      if(order.length===0){
+        order = shuffle([...Array(questions.length).keys()]);
+      }
+      const idx = order.pop();
+      setQuestion(idx);
+    }
+    function shufflePack(){
+      order = shuffle([...Array(questions.length).keys()]);
+      // visual nudge
+      const q = document.getElementById('question');
+      q.style.outline = '2px solid rgba(96,165,250,.4)';
+      q.style.boxShadow = '0 0 0 6px rgba(96,165,250,.12)';
+      setTimeout(()=>{
+        q.style.outline = 'none';
+        q.style.boxShadow = 'none';
+      }, 320);
+    }
+    async function copyCurrent(){
+      const text = document.getElementById('question').textContent.trim();
+      try{
+        await navigator.clipboard.writeText(text);
+        toast("Copied!");
+      }catch(e){
+        toast("Copy failed");
+      }
+    }
+    function toast(msg){
+      const n = document.createElement('div');
+      n.textContent = msg;
+      n.style.position='fixed';
+      n.style.left='50%';
+      n.style.bottom='24px';
+      n.style.transform='translateX(-50%)';
+      n.style.background='rgba(17,24,39,.95)';
+      n.style.color='#e5e7eb';
+      n.style.padding='10px 14px';
+      n.style.border='1px solid rgba(255,255,255,.12)';
+      n.style.borderRadius='999px';
+      n.style.boxShadow='0 8px 18px rgba(0,0,0,.35)';
+      n.style.fontSize='13px';
+      n.style.zIndex='9999';
+      document.body.appendChild(n);
+      setTimeout(()=>{ n.remove(); }, 1200);
+    }
+
+    // Bindings
+    document.getElementById('nextBtn').addEventListener('click', nextQuestion);
+    document.getElementById('shuffleBtn').addEventListener('click', shufflePack);
+    document.getElementById('copyBtn').addEventListener('click', copyCurrent);
+
+    // Start state
+    shufflePack(); // prepare order
+  </script>
+</body>
+</html>
